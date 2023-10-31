@@ -1,0 +1,9 @@
+img{
+    width: 30px;
+}
+
+#right{
+    top: 30px;
+    float: right;
+    text-align: right;
+}
