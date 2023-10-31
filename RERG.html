@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Relationship Evaluation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+  
+  <script>
+    function onClick() {
+       var pdf = new jsPDF('p', 'pt', 'letter');
+       pdf.canvas.height = 72 * 11;
+       pdf.canvas.width = 72 * 8.5;
+       margins = {
+           top: 40,
+           bottom: 60,
+           left: 40,
+           width: 522
+           };
+           
+           
+        
+        
+        var text = document.getElementById('n1').value;
+        document.getElementById("p1").innerHTML = text;
+        var text2 = document.getElementById('n1').value;
+        document.getElementById("nm").innerHTML = text2;
+        
+        //time
+        var NowDate=new Date();
+        var y=NowDate.getFullYear();
+        var mo=NowDate.getMonth()+1;
+        var d=NowDate.getDay();
+　      var h=NowDate.getHours();
+　      var m=NowDate.getMinutes();
+　      
+　      document.getElementById('nmt').innerHTML = y+'/'+mo+'/'+d+" "+ h+':'+m;
+        
+        
+        var text1 = document.getElementById('n2').value;
+        document.getElementById("p2").innerHTML = text1;
+        
+        
+        selectElement = document.querySelector('#s1');           
+        o1=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o1').textContent = o1;
+        
+        selectElement = document.querySelector('#s2');           
+        o2=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o2').textContent = o2;
+        
+        selectElement = document.querySelector('#s3');           
+        o3=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o3').textContent = o3;
+        
+        selectElement = document.querySelector('#s4');           
+        o4=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o4').textContent = o4;
+        
+        selectElement = document.querySelector('#s5');           
+        o5=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o5').textContent = o5;
+        
+        selectElement = document.querySelector('#s6');           
+        o6=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o6').textContent = o6;
+        
+        selectElement = document.querySelector('#s7');           
+        o7=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o7').textContent = o7;
+        
+        selectElement = document.querySelector('#s8');           
+        o8=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o8').textContent = o8;
+        
+        selectElement = document.querySelector('#s9');           
+        o9=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o9').textContent = o9;
+        
+        selectElement = document.querySelector('#s10');           
+        o10=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o10').textContent = o10;
+        
+        selectElement = document.querySelector('#s11');           
+        o11=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o11').textContent = o11;
+        
+        selectElement = document.querySelector('#s12');           
+        o12=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o12').textContent = o12;
+        
+        selectElement = document.querySelector('#s13');           
+        o13=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o13').textContent = o13;
+        
+        selectElement = document.querySelector('#s14');           
+        o14=selectElement.options[selectElement.selectedIndex].value;
+        document.querySelector('#o14').textContent = o14;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+       var elementHTML = document.getElementById("content");
+       
+       
+
+      pdf.fromHTML(elementHTML, margins.left,margins.top, {
+        width: margins.width 
+      },margins);
+
+      pdf.save('Report.pdf');
+};
+
+var element = document.getElementById("clickbind");
+element.addEventListener("click", onClick);
+
+</script>
+  
+  <style>
+  
+  h1{
+    position: relative;
+    left: 30%;
+    }
+
+  </style>
+  
+</head>
+
+<body>
+
+
+<div id="content">
+
+<h1>Relationship Evaluation Report</h1>
+
+
+<h4>Please choose the suitable options in the following evaluation factors. Most statements should be about subjects, not evaluators.</h4> 
+
+<label>Evaluator:</label>
+<input type="block" id="n1" onkeydown="return stopTab(event);">
+<strong id="p1"></strong><br><label>Subject:</label>
+<input type="block" id="n2" onkeydown="return stopTab(event);">
+<strong id="p2"></strong><br>
+
+
+
+<h3>Passion</h3>
+Performance : 
+<select id="s1">
+  <option value="weak">weak</option>
+  <option value="medium">medium</option>
+  <option value="too much">too much</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o1"></span><br>Romantic : 
+<select id="s2">
+  <option value="weak">weak</option>
+  <option value="medium">medium</option>
+  <option value="too much">too much</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o2"></span><br>Emotion variation : 
+<select id="s3">
+  <option value="low">low</option>
+  <option value="medium">medium</option>
+  <option value="intensive">intensive</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o3"></span><br>
+
+<h3>Intimacy</h3>
+Distance : 
+<select id="s4">
+  <option value="far">far</option>
+  <option value="medium">medium</option>
+  <option value="too close">too close</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o4"></span><br>Attitude toward attachment : 
+<select id="s5">
+  <option value="anxious">anxious</option>
+  <option value="eager">eager</option>
+  <option value="medium">medium</option>
+  <option value="weak">weak</option>
+  <option value="too weak">too weak</option>
+</select>
+<span id="o5"></span><br>
+
+<h3>Communication</h3>
+  Avoid : 
+    <select id="s6">
+      <option value="low">low</option>
+      <option value="medium">medium</option>
+      <option value="high">high</option>
+    </select>
+    <span id="o6"></span><br>Selfish : 
+    <select id="s7">
+      <option value="low">low</option>
+      <option value="medium">medium</option>
+      <option value="high">high</option>
+    </select>
+    <span id="o7"></span><br>Reasonable : 
+    <select id="s8">
+      <option value="low">low</option>
+      <option value="medium">medium</option>
+      <option value="high">high</option>
+    </select>
+    <span id="o8"></span><br>
+
+
+
+<h3>Commitment</h3>
+Goal of the relationship of the subject : 
+<select id="s9">
+  <option value="long term">long term</option>
+  <option value="nothing">nothing</option>
+  <option value="short term">short term</option>
+</select>
+<span id="o9"></span><br>Attitude toward commitment : 
+<select id="s10">
+  <option value="passive">passive</option>
+  <option value="nothing">nothing</option>
+  <option value="active">active</option>
+</select>
+<span id="o10"></span><br>
+
+<h3>Interaction</h3>
+Average feeling of evaluator : 
+<select id="s11">
+  <option value="great">great</option>
+  <option value="medium">medium</option>
+  <option value="uncomfortable">uncomfortable</option>
+</select>
+<span id="o11"></span><br>Chatting topic : 
+<select id="s12">
+  <option value="not interesting">not interesting</option>
+  <option value="medium">medium</option>
+  <option value="great">great</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o12"></span><br>Behavior : 
+<select id="s13">
+  <option value="need some revise">need some revise</option>
+  <option value="medium">medium</option>
+  <option value="Kudos">Kudos</option>
+  <option value="acceptable">acceptable</option>
+</select>
+<span id="o13"></span><br>
+
+
+<h3>Conclusion</h3>
+<select id="s14">
+  <option value="Pass">Pass</option>
+  <option value="Just need some revise">Just need some revise</option>
+  <option value="Keep observation">Keep observation</option>
+  <option value="Fail">Fail</option>
+</select><span id="o14" style="font-size:39px"></span><br>
+
+
+<div style="position: fixed;bottom: 5px;">
+<strong id="nm" style="font-size:21px;"></strong><br><strong id="nmt"></strong>
+</div>
+</div>
+
+
+
+<button id="button" onclick="onClick();">Download PDF Report</button>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

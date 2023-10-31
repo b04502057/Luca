@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/thesis.css">
+    <title>todo list code</title>
+</head>
+<body>
+    <a href="#todo">To-do List tool </a><br>
+    <a href="#sub">Substitution Cipher tool </a><br>
+    <a href="#fre">Frequency Analysis tool </a><br>
+    
+<div id="todo">
+以下粗略的解釋如何用txt檔寫batch file做成一個規劃時間的小程式<br><br><br><br>
+
+功能<br>
+檢視代辦事項<br>
+記錄當天工作項目並自動計算花費時間: 一項工作開始前先輸入工作名稱，完成後會自動記錄花費時間並寫入紀錄檔，另外也可以增加對這次任務的註解或心得<br><br><br><br>
+
+
+名詞解釋<br>
+.txt: 文字檔，在桌面按右鍵選”新增”，裡面應該會有”text document”或”文字檔案”之類的選項，那個就是txt檔，用來儲存文字<br>
+Batch: 一種可以用文字檔執行的程式，可以執行文字檔中的命令<br>
+程式: 裝有指令的檔案，這些指令能操作電腦進行某些動作<br><br><br><br>
+
+步驟<br>
+1.	在桌面新增txt檔: 在桌面點右鍵選”新增”，然後選”文字檔案”，這時候桌面就會新增一個文字檔案而且要你命名了。一共要新增四個txt檔，其中三個檔名必須是ATTR, RT, things，最後一個檔名不限<br>
+2.	編輯檔案: 點兩下點開不限檔名的txt檔，複製以下文字到txt檔中<br><br><br><br>
+
+
+@echo off<br><br>
+
+echo """""""""""""""""""""""""""""""">>"C:\Users\luca_lu\Desktop\ATTR.txt"<br>
+echo %date% %time%>>"C:\Users\luca_lu\Desktop\ATTR.txt"<br>
+echo subjective        spending time>>"C:\Users\luca_lu\Desktop\ATTR.txt"<br>
+echo subjective        spending time>"C:\Users\luca_lu\Desktop\things.txt"<br>
+call:main<br><br><br><br>
+
+
+:main<br>
+setlocal enabledelayedexpansion<br>
+SET choose=<br>
+SET /p choose=what do you want?[1]show remain tasks [2]start scheduling <br>
+IF "!choose!"=="2" (call:recordfun)<br>
+IF "!choose!"=="1" (call:RT)<br>
+goto main<br>
+EXIT /B 0<br><br><br>
+
+
+:RT<br>
+setlocal enabledelayedexpansion<br>
+FOR /F "tokens=*" %%i IN (RT.txt) DO (@echo %%i)<br>
+goto main<br>
+EXIT /B 0<br><br><br><br>
+
+
+
+:recordfun<br>
+SET /a lt<br>
+SET /a nt<br>
+rem echo please use bottom line or the other symbol to replace space. problem solve with "tokens=*" in for loop<br>
+setlocal enabledelayedexpansion<br>
+SET sub=<br>
+SET nono=<br>
+SET /p sub=task title: <br>
+SET /a lt=%time::=%<br>
+call:getdetail lt<br>
+set /a lts1=%lts%<br>
+set /a ltm1=%ltm%<br>
+set /a lth1=%lth%<br>
+rem echo %lt%<br>
+echo current task is !sub!<br>
+SET /p nono=press enter when you finish<br>
+SET /a nt = %time::=%<br>
+call:getdetail nt<br>
+rem if %lth1% leq %lth% (echo former) else (echo later)<br>
+if %lth1% leq %lth% (set /a dth=lth-lth1) else (SET /A dth=lth+24-lth1)  <br>
+if %ltm1% leq %ltm% (set /a dtm=ltm-ltm1) else (SET /A dtm=ltm+60-ltm1 
+set /a dth=dth-1)<br>
+if %lts1% leq %lts% (set /a dts=lts-lts1) else (SET /A dts=lts+60-lts1 
+set /a dtm=dtm-1)<br>
+echo you spend %dth% hour %dtm% minute %dts% seconds on !sub!<br><br>
+
+(echo !sub!             %dth%h_%dtm%m_%dts%s)>>"C:\Users\luca_lu\Desktop\things.txt"<br>
+(echo !sub!             %dth%h_%dtm%m_%dts%s)>>"C:\Users\luca_lu\Desktop\ATTR.txt"<br>
+set /p toto=[1] show history [2] add comment [3] continue [4] show remain tasks<br>
+IF "!toto!"=="2" (<br>
+set /p com=your commend or suggestion about the task: <br>
+echo !com!>>things.txt<br>
+echo ==============<br>
+set /p toto=[1] show history [3] continue [4] shoe remain tasks<br>
+IF "!toto!"=="4" (goto RT)<br>
+)<br>
+echo ===================================<br>
+IF "!toto!"=="1" (FOR /F "tokens=*" %%i IN (things.txt) DO (@echo %%i)  <br>
+echo ===================================<br>
+set /p toto=[3] continue [4] show remain tasks<br>
+IF "!toto!"=="4" (goto RT)<br>
+)<br>
+IF "!toto!"=="4" (goto RT)<br>
+set toto=  <br>
+goto recordfun<br>
+EXIT /B 0<br><br><br><br>
+
+
+:getdetail<br>
+set /a lth=%~1/10000<br>
+set /a ltm=(%~1-10000*%lth%)/100<br>
+set /a lts=%~1-%lth%*10000-%ltm%*100<br>
+EXIT /B 0<br><br><br><br><br><br><br>
+
+
+
+3.	更改路徑: 因為這個batch檔會去其他檔按讀取或寫資料，路徑必須正確，所以上面紅色的路徑要改成你電腦中的路徑。路徑的找法是對要找路徑的檔案點選右鍵，選擇最下面的”property”，這時會彈出一個視窗，裡面可以找到”位置: :C:\User……”之類的文字，複製這些文字到紅色部分，並在最後加上檔案名稱如”\ATTR.txt”。前面三個是加”ATTR.txt”，第四和五是加”\things.txt”，第六是加”\ATTR.txt”，雙引號不用加進去<br>
+4.	儲存檔案: 按下ctrl+s，或是點選左上角file – save，之後關閉檔案<br>
+5.	改檔名: 點那個名字不限的檔案，後面叫他test.txt好了。點test.txt後按下F2，或是點右鍵選擇”重新命名”也可以，把test.txt改成test.bat，這時候系統會跳出警告，不用理他按下yes<br>
+6.	使用介紹: 直接點選test.bat，這時候輸入1按下enter會顯示出未完成的任務，這時候會發現是空的，因為未完成任務會去RT.txt檔案讀取。可以試著在RT.txt檔案中輸入你還沒有辦完的任務並且儲存，這時候再選擇[1] show remain tasks一次就會跑出你還沒有辦完的任務了<br>
+7.	任務紀錄: 輸入2會進入紀錄函式，視窗出現task title，這時請輸入現在要開始做的任務名稱後按下enter，視窗首先會出現Missing operator(這我不知道怎麼debug嗚嗚)，不用理他，接著會顯示你當前的任務名稱，例如你輸入bubu的話就會顯示”current task is bubu”。這時候就把她放著就可以，直到你完成此項任務，請按下enter，這時候會再出現一個悲傷的Missing operator，不用理他，接著會顯示你執行這項任務花了多少時間，如”you spend 0 hour 2 minute 21 seconds on bubu”。此時可以看到下面有四個選項，輸入1按下enter會顯示你這次打開這個程式所有任務的名稱、花費時間和備註，程式重開就會洗掉。輸入2按下enter可以新增備註，就是你這件事可能做得像屎一樣，你就可以輸入”I crying so loud but god don’t hear it”之類的備註，這些都會被寫進紀錄裡。3是繼續記錄下一項任務。4是顯示目前剩餘任務<br>
+8.	歷史紀錄: 開啟ATTR.txt，裡面會有歷史紀錄，有看了不高興地可以直接刪掉後存檔，反正寫入都是從最尾端寫入(ATTR是all the time record的意思)(其實我不知道這邊該不該加the)<br><br><br><br>
+
+
+程式解釋<br>
+以下一段一段解釋每句的意思，讀懂之後可以自己改改看，改成自己想要的功能，但在debug或更改時務必記住下列原則<br><br>
+1.	了解流程: 每一段code都有input和output，如果把其中一段的ouput改掉變成後面步驟不能使用的樣子那程式就不能跑了，有點像你叫公司的收發處郵遞區號都改成妳女兒的作文，因為你覺得寫的真不錯<br>
+2.	一次只修改一點: 程式的流程和操作常常不像人類直覺所想的那樣，所以改錯很正常，那要是一次改錯一大堆那就很難debug了，可以電腦收一收下課了。一次只改一點點並跑跑看是不是跟預期的一樣再進行下一部份的修改<br>
+3.	確保隨時都有原先版本的存檔: 有時候整個就是不順，就像妳各位的人生一樣，好想重來好想投胎，這時候沒有先前可以跑的版本可是無法投胎的歐<br><br><br><br>
+
+
+
+========================================<br>
+@echo off<br>
+========================================<br><br>
+解釋: 把顯示程式運作流程功能關閉，debug的時候可以用，但平常用會太亂，可以把這行去掉跑跑看<br><br>
+========================================<br>
+echo """""""""""""""""""""""""""""""">>"C:\Users\luca_lu\Desktop\test environment\ATTR.txt"<br>
+echo %date% %time%>>"C:\Users\luca_lu\Desktop\test environment\ATTR.txt"<br>
+echo subjective        spending time>>"C:\Users\luca_lu\Desktop\test environment\ATTR.txt"<br>
+echo subjective        spending time>"C:\Users\luca_lu\Desktop\test environment\things.txt"<br>
+call:main<br>
+=========================================<br><br>
+
+解釋: echo可以想成是在檔案或視窗中打字，所以第一行是在後面那個檔案裡加入前面那一堆雙引號，我是用來區別每一次的紀錄內容。以此類推，下一行就是寫入日期和時間，在下一行是寫入標題跟花費時間的標示，讓閱讀比較容易，下一行一樣只不過是寫到另一個檔案。最後的call:main是呼叫執行名叫main的function<br><br>
+
+Q: 什麼是function?<br>
+A:  function就是函式，可以想像成小工具，或是小弟。假設你今天是一個老大，你想要吃一堆水果，你不可能每次都自己去買，所以你會叫一個小弟負責買水果，這個水果小弟就是一個function，它的功能就是買水果，只要你給他”去給我買水果!”的指令(input)，他過一段時間就會帶著水果(output)出現。以後你想要水果，就call這個小弟(call:main)，就輕鬆得有水果吃了。但大家都知道買水果不是一件容易的事，尤其是買一堆水果，所以這個水果小弟可能需要其他幫手(其他 function)，例如提水果小弟、付錢小弟、刷載具小弟，這些小弟平常就在那邊翹腳看劇吃水果，當老大想要買水果的時候水果小弟會第一個收到命令，這時候水果小弟可以再call其他的小弟們來幫忙，這樣他就不用提水果付錢刷載具了，這些其他小弟完成任務，交給水果小弟他們各自的ouput(提回來的水果、”報告大哥二兵已完成付款作業操作!”、發票紀錄)，水果小弟就可以拿回去給老大，大家各司其職，輕鬆完成任務，沒有人今天會被強迫餵榴槤，多開心。<br><br><br>
+
+=========================================<br>
+:main<br>
+setlocal enabledelayedexpansion<br>
+SET choose=<br>
+SET /p choose=what do you want?[1]show remain tasks [2]start scheduling <br>
+IF "!choose!"=="2" (call:recordfun)<br>
+IF "!choose!"=="1" (call:RT)<br>
+goto main<br>
+EXIT /B 0<br>
+========================================<br><br><br>
+解釋: :main標示出main這個function(小弟)位置，這樣主程式(老大)才知道要去哪裡找他。Setlocal enabledelayedexpansion 是一個batch檔在debug時可能需要的一個設定，因為batch檔會提前展開變數，造成loop中如果你想看變數每次的變化會發現都會是初始設定值，因為batch檔一直在讀一開始就展開的初始值，可參考: https://bluenowhere334.blogspot.com/2018/06/batch-enabledelayedexpansion.html<br>
+Set choose= 是設定一個叫做choose的變數，下面那行是把使用者的輸入值丟到choose這個變數中，choose後的=後的文字是要顯示出來的文字，和choose的值無關。Choose從使用者的回答得到值後，下面兩行if會檢查choose的值是不是1，是1的話要call recordfun這個function; 是2的話要call RT這個function。但事實上我們無法確認使用者會不會輸入1, 2以外的東西，所以如果他輸入其他東西，這兩行if都會因為不符合而不進行後面動作，程式繼續執行下一行goto main，也就是移動到main function繼續執行。這邊感覺也可以用loop去寫，或許可以試試看。最後的EXIT /B 0代表function的內容在這裡結束<br>
+<br>
+Q:甚麼是變數?<br>
+A:變數就是裝東西的容器，可以想像成水果禮盒的盒子。例如我在上面創造了一個叫choose的水果禮盒盒子，使用者丟進一堆鈔票，以後你叫choose這個盒子出來裡面就會有上次別人放進去的鈔票了<br><br>
+
+Q:if怎麼用?<br>
+A:if 之後會接判斷式，如果判斷式是正確的那就會執行後面括弧中的指令，如果判斷式是錯的那就不會執行。if後面還可以接else和else if，頗簡單的可以上網查查試試看<br><br>
+========================================<br>
+:RT<br>
+setlocal enabledelayedexpansion<br>
+FOR /F "tokens=*" %%i IN (RT.txt) DO (@echo %%i)<br>
+goto main<br>
+EXIT /B 0<br>
+=========================================<br><br><br>
+解釋: 一樣:後加上function名字代表function起始位置，第二行和main function中的一樣，接下來有一個for loop，他會把RT.txt中的所有字echo出來。顯示完remain task後goto main function看使用者還想做什麼，EXIT /B 0代表 RT function的結束<br><br>
+
+Q:什麼是for loop?<br>
+A:迴圈，可以一直重複做類似事情的結構，例如老大要你買十次水果，講十次很累，這時候就會for(int i=0;i<10;i++){給我現在去買水果}，這樣就會自動買十次了。這邊寫的是比較像C++的語法，batch的for loop語法我也沒有很熟，可以上網查查看結構應該都差不多，就是要有重複做的次數或範圍，後面接上要做甚麼<br><br>
+========================================<br>
+:recordfun<br>
+SET /a lt                  //定義一個變數，/a代表這個變數會做數學計算<br>
+SET /a nt<br>
+rem echo please use bottom line or the other symbol to replace space. problem solve with "tokens=*" in for loop            //rem 是註解的意思，不會被執行<br>			
+setlocal enabledelayedexpansion            //同前面function中的解釋<br>
+SET sub=<br>
+SET nono=<br>
+SET /p sub=task title: <br>
+SET /a lt=%time::=%                    //把時間中的:變成空白(10:30>1030)<br>
+call:getdetail lt                        //call getdetail function, input是lt<br>
+set /a lts1=%lts%                      //把getdetail的output拿出來<br>
+set /a ltm1=%ltm%<br>
+set /a lth1=%lth%<br>
+rem echo %lt%                       //沒刪乾淨的註解<br>
+echo current task is !sub!               //echo一下目前任務，用!包住變數sub<br>
+SET /p nono=press enter when you finish<br>
+SET /a nt = %time::=%<br>
+call:getdetail nt<br>
+rem if %lth1% leq %lth% (echo former) else (echo later)    //不明註解<br>
+if %lth1% leq %lth% (set /a dth=lth-lth1) else (SET /A dth=lth+24-lth1)  <br>
+if %ltm1% leq %ltm% (set /a dtm=ltm-ltm1) else (SET /A dtm=ltm+60-ltm1 <br>
+set /a dth=dth-1)<br>
+if %lts1% leq %lts% (set /a dts=lts-lts1) else (SET /A dts=lts+60-lts1 <br>
+set /a dtm=dtm-1)<br>
+echo you spend %dth% hour %dtm% minute %dts% seconds on !sub!<br><br>
+
+(echo !sub!             %dth%h_%dtm%m_%dts%s)>>"C:\Users\luca_lu\Desktop\test environment\things.txt"    //把花費時間寫進things.txt檔<br>
+(echo !sub!             %dth%h_%dtm%m_%dts%s)>>"C:\Users\luca_lu\Desktop\test environment\ATTR.txt"<br>
+set /p toto=[1] show history [2] add comment [3] continue [4] show remain tasks<br>
+IF "!toto!"=="2" (<br>
+set /p com=your commend or suggestion about the task:         //要求輸入備註<br>
+echo !com!>>things.txt                       //把備註寫入things.txt<br>
+echo ==============<br>
+set /p toto=[1] show history [3] continue [4] shoe remain tasks<br>
+IF "!toto!"=="4" (goto RT)<br>
+)<br>
+echo ===================================<br>
+IF "!toto!"=="1" (FOR /F "tokens=*" %%i IN (things.txt) DO (@echo %%i)  <br>
+echo ===================================<br>
+set /p toto=[3] continue [4] show remain tasks<br>
+IF "!toto!"=="4" (goto RT)<br>
+)<br>
+IF "!toto!"=="4" (goto RT)<br>
+set toto=  <br>
+goto recordfun<br>
+EXIT /B 0<br>
+==========================================<br><br><br>
+解釋: 太多行了直接寫在旁邊用//表示。算時間那邊看起來沒有很直覺是因為秒進位到分或分進位到小時的算法不直觀，所以要比較一下結束時時間的秒數是不是比開始時的大，式的話直接相減，不是的話要換算一下，這同時也要修正一下分的數值，分的進位也是一樣，不然花費時間會出現負值。<br><br>
+
+============================================<br>
+:getdetail<br>
+set /a lth=%~1/10000<br>
+set /a ltm=(%~1-10000*%lth%)/100<br>
+set /a lts=%~1-%lth%*10000-%ltm%*100<br>
+EXIT /B 0<br>
+===========================================<br><br>
+解釋: getdetail function，用來獲得時間數值。前面有提到我們把10:23:56這轉時間利用%time::=%變成102356，這裡需要注意一下，time後的:是用來區隔time和要處理的字元，第二個:才是表示我們現在要把:都換成別的字元，這邊換成沒有字元所以等號後面沒東西。%1代表function的第一個input，上面call function時call:getdetail nt，nt就是input，function後可以有很多input，只是這邊我們只用的到一個，如果有很多個要在function內被使用那依序可以用%2, %3, …代表。%~1代表取用第一個input但有先把%1本身的””刪除，例如”raccon”就會變成raccon。這邊我也忘記為什麼要用到%~1，剛試了一下只用%1好像也可以。總之102356/1000可以得到10(hour)，(102356-10*1000)/100可以得到分鐘數，以此類推，就得到所有的時間值了，recordfun的後面就會拿開始和結束時間去計算花費時間<br><br><br>
+<br><br>
+Conclusion:水果老大的比喻真不錯
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div id="sub">
+        Substitution Cipher Tool<br>
+        可以把英文以substitution cipher加密的小工具<br><br>
+
+        古典密碼學(Classical cryptography) <br>
+        密碼學可以大概分成古典密碼學跟近代密碼學，近代密碼學就是用電腦跟一些困難的數學來加密(抽象代數、群論、橢圓曲線、公鑰密碼系統)，這邊要講的是部分的古典密碼學<br>
+        最一開始的密碼系統大概是Shift cipher(Caesar Cipher), 就是把每個英文字母對應到數字，例如a會對到0, b=1, c=2,...，這時候設定一個值叫做key，就是加密或解密的鑰匙，key會是0-25之間的一個正整數，設定完key之後，就把每個字對應的數值加上key，再把加上key之後的數值對應到英文，就完成加密了<br>
+        例如加密狗的英文 <br>
+        [輸入]dog<br>
+        [對應到數字]d=3, o=14, g=6, 設key=3<br>
+        [加上key]6, 17, 9<br>
+        [對應到英文]6=g, 17=r, j=9<br>
+        [輸出]grj<br>
+        解碼就是倒著步驟做回去<br><br>
+
+        密碼學固定的三個角色是Bob, Alice, Oscar，Bob跟Alice想要通訊但不想被在擷取訊息的Oscar知道他們在聊什麼，跟騷法好像也不能把Oscar定罪，總之最壞打算就是通訊資料會被Oscar拿到，那要怎麼辦呢?搞不好Bob和Alice在傳相當不得了的東西啊，例如<br><br>
+        這時候Bob和Alice就想到了，把通訊的資料(明文)加密讓Oscar看不懂呢?為之震驚，"這樣我連裸照都可以傳了(link:[theoretical]如何加密自己的裸照)!"。通訊資料可能是文字或圖片或聲音之類的，這邊先討論文字，最簡單的方法就像上面說的shift cipher，但其實應該要看看自己的Oscar是誰，要是你的Oscar比較聰明那shift cipher其實跟沒加密差不多<br>
+        這時候就要來玩"假如我是Oscar"遊戲了:<br>
+        假如我是Oscar，因為某些符合Oscar人物設定的亂七八糟原因，我這個Oscar必須知道這兩個地方朋友到底在工撒，你各位了解嗎?<br>
+        我的設定是這個Oscar當兵的時候是班長<br>
+        J啥?亂七八糟的英文字，一定是那個凱薩密碼啦!因為我也只知道這個密碼...<br>
+        wiki一下凱薩密碼，key最多從0到25ㄏㄧㄡ，阿那不就試25次之內就會有答案了嗎?這兩個人，當我87....?<br>
+        就這樣，Oscar在試了幾個key之後密文全部被轉換成正常的英文，同時也了解到了Bob和Alice的特殊興趣，希望下次自己也可以加入他們，或請警察去抓他們<br><br>
+
+        這邊還有一個問題，就是Bob跟Alice是怎麼讓對方知道key的?難道是確認過眼神?你是對的人?如果他們有不會被截取的管道溝通那這個加密是在加身體健康的?<br>
+        這邊其實也蠻符合現實的，ㄧ般來說應該都會有相對安全的管道傳送少量訊息，例如打仗時派一支精銳部隊護送key到我軍的另外一個陣地，雖然成本高但只需要一次，其他通訊就用對講機之類相對不安全的管道傳遞，因為不可能一句"喂，排長今天有做布丁，我幫你留一個"也要一支精銳部隊護送。另外一個可能是在這條通道上傳輸太多資料會被發現，不一定是成本高，總之就是這條管道只能傳送少量資料<br><br>\
+
+
+        所以這邊密碼學的大概的故事架構就出來了<br>
+        (1)Bob和Alice要講秘密<br>
+        (2)Oscar想知道而且總是有辦法擷取通訊資料<br>
+        (3)Bob和Alice有可以傳輸少量資料的秘密通訊管道<br><br>
+
+        幾個月前看了很多毒梟影集，想到(3)就想到Bob或Alice的直腸，但應該是不可能的，因為他們的屁屁能去見另一個人的話他們也不需要通訊了<br><br>
+
+        正題:Substitution Cipher<br>
+        替代密碼，前面說到位移密碼只能對付小班Oscar，那如果或你的孩子今天是讀中班呢?中班的Oscar可是學過99乘法表可是很厲害的，這樣你們的秘密一定會被看光光，這時候可能就需要Substitution Cipher了<br>
+        Shift Cipher是每個字母位移固定key值，那如果我的加密方法裡每個字母的位移量不同呢?這就是Substitution Cipher，用任意特定字母取代明文字母，例如a=b, b=p, k=z...只要確定沒有對應到重複的密文字母就好，這樣加密的可能有:<br><br>
+        a可能對到的字母有26種、b可能對到25種(因為一種被a用掉了)、c可能對到24種(因為a,b個用掉一種)...=26*25*24*...*1=26!=4.0329146*10^26種，就是有4後面26個0那樣多種<br><br>
+        我們絕對可以確定Oscar沒辦法活那麼久，但要是Oscar的五代子孫終於解出來祖先一輩子想知道的密文，那也是蠻浪漫的，雖然明文可能是<br><br>
+        
+        "ㄟ緊急，布丁連長說他也要留一個"<br><br>
+
+        下面就是Substitution Cipher的加密和解密的batch file code:<br><br>
+
+        @echo off<br>
+        setlocal enabledelayedexpansion<br>
+        goto:main<br>
+        pause<br><br>
+
+        =======================================================<br>
+        @echo off是讓batch檔跑的時候不會寫出自己做了什麼，不然很吵<br>
+        setlocal enabledelayedexpansion是batch檔運作的一個機制的解決方法，如果沒有用你在batch檔裡面寫的loop的值不會隨時變動，詳細可以上網查詢<br>
+        goto:main會導向main function<br>
+        pause是讓batch檔執行完最後一行的時候停下來等你的功能，不然會跑完就自動關閉，不過在這個code裡應該也不需要，後面會看到我讓main繼續導向main，所以程式根本不會結束<br>
+        =======================================================<br><br>
+
+        :main<br>
+        set /p "option=[1]encode[2]decode"<br>
+        if "!option!"=="1" (call:encode)<br>
+        if "!option!"=="2" (call:decode)<br>
+        goto main<br>
+        EXIT /B 0<br><br>
+
+        =====================================================<br>
+        :main代表main的起頭，讓前面的goto:main找的到位置<br>
+        set /p "option=[1]encode[2]decode"是在設定一個變數option，等號後面的東西不重要只是會顯示出來引導使用者選擇<br>
+        後面兩個if在判斷使用者輸入後被存入option裡的東西是1還是2，是1要呼叫encode function，2要呼叫decode function<br>
+        goto main是在呼叫完要使用的function後再次導向main function繼續運作<br>
+        EXIT /B 0提示function結束，/B是batch file的意思，0是exit code，可以查察其他exit code的用法<br>
+        ======================================================<br><br>
+
+        :encode<br>
+        setlocal enabledelayedexpansion<br>
+        set /p "plaintext=here"<br>
+        for /L %%i in (0,1,250) do (<br>
+            set "letter=!plaintext:~%%i,1!"<br>
+            if "!letter!"=="a" (echo|set /p="t")<br>
+        if "!letter!"=="b" (echo|set /p="u")<br>
+        if "!letter!"=="c" (echo|set /p="v")<br>
+        if "!letter!"=="d" (echo|set /p="s")<br>
+        if "!letter!"=="e" (echo|set /p="q")<br>
+        if "!letter!"=="f" (echo|set /p="r")<br>
+        if "!letter!"=="g" (echo|set /p="c")<br>
+        if "!letter!"=="h" (echo|set /p="w")<br>
+        if "!letter!"=="i" (echo|set /p="d")<br>
+        if "!letter!"=="j" (echo|set /p="e")<br>
+        if "!letter!"=="k" (echo|set /p="x")<br>
+        if "!letter!"=="l" (echo|set /p="a")<br>
+        if "!letter!"=="n" (echo|set /p="g")<br>
+        if "!letter!"=="o" (echo|set /p="p")<br>
+        if "!letter!"=="p" (echo|set /p="f")<br>
+        if "!letter!"=="q" (echo|set /p="l")<br>
+        if "!letter!"=="r" (echo|set /p="m")<br>
+        if "!letter!"=="s" (echo|set /p="b")<br>
+        if "!letter!"=="t" (echo|set /p="k")<br>
+        if "!letter!"=="u" (echo|set /p="j")<br>
+        if "!letter!"=="v" (echo|set /p="o")<br>
+        if "!letter!"=="w" (echo|set /p="i")<br>
+        if "!letter!"=="x" (echo|set /p="y")<br>
+        if "!letter!"=="y" (echo|set /p="n")<br>
+        if "!letter!"=="z" (echo|set /p="h")<br>
+        if "!letter!"=="m" (echo|set /p="z")<br>
+        )<br>
+        echo blablabla<br>
+        goto main<br>
+        EXIT /B 0<br><br>
+
+        =======================================================<br>
+        :encode標示encode function的起始位置<br>
+        設定一個變數plaintext來裝使用者輸入的資料<br>
+        for迴圈設定一個變數%%i從0開始，每走完一次迴圈就把%%i增加1直到%%i超過250<br>
+        set "letter=!plaintext:~%%i,1!"把plaintext裡的第~%%i個字母作為substring的開頭，,1表示這個substring的長度，所以這行指令就會把plaintext裡的第%%i個字母擷取出來指派到letter裡<br>
+        後面就是在判斷如果letter收到的字母是什麼那程式要輸出什麼英文字母，這邊就是Substitution Cipher可以隨意更改的地方<br>
+        echo blablabla是在程式上印出blablabla讓我好判斷結束，其實沒什麼實際用途<br>
+        後面兩行指向main function跟結束encode function<br>
+        =========================================================<br><br>
+
+        :decode<br>
+setlocal enabledelayedexpansion<br>
+set /p "plaintext=here"<br>
+for /L %%i in (0,1,250) do (<br>
+    set "letter=!plaintext:~%%i,1!"<br>
+    if "!letter!"=="t" (echo|set /p="a")<br>
+if "!letter!"=="u" (echo|set /p="b")<br>
+if "!letter!"=="v" (echo|set /p="c")<br>
+if "!letter!"=="s" (echo|set /p="d")<br>
+if "!letter!"=="q" (echo|set /p="e")<br>
+if "!letter!"=="r" (echo|set /p="f")<br>
+if "!letter!"=="c" (echo|set /p="g")<br>
+if "!letter!"=="w" (echo|set /p="h")<br>
+if "!letter!"=="d" (echo|set /p="i")<br>
+if "!letter!"=="e" (echo|set /p="j")<br>
+if "!letter!"=="z" (echo|set /p="k")<br>
+if "!letter!"=="a" (echo|set /p="l")<br>
+if "!letter!"=="g" (echo|set /p="n")<br>
+if "!letter!"=="p" (echo|set /p="o")<br>
+if "!letter!"=="f" (echo|set /p="p")<br>
+if "!letter!"=="l" (echo|set /p="q")<br>
+if "!letter!"=="m" (echo|set /p="r")<br>
+if "!letter!"=="b" (echo|set /p="s")<br>
+if "!letter!"=="k" (echo|set /p="t")<br>
+if "!letter!"=="j" (echo|set /p="u")<br>
+if "!letter!"=="o" (echo|set /p="v")<br>
+if "!letter!"=="i" (echo|set /p="w")<br>
+if "!letter!"=="y" (echo|set /p="x")<br>
+if "!letter!"=="n" (echo|set /p="y")<br>
+if "!letter!"=="h" (echo|set /p="z")<br>
+if "!letter!"=="z" (echo|set /p="m")<br>
+)<br>
+echo blablabla <br>
+goto main<br>
+EXIT /B 0<br><br>
+
+        ==============================================<br>
+        在main問的時候輸入2就會call這個function，長得和encode function一模一樣，只是這邊要解碼，輸入是密文輸出是明文，所以要注意對應關係方向要相反<br>
+        ==============================================<br><br><br>
+
+
+        使用說明<br>
+        1. 把上面程式碼的部分都貼到一個txt檔裡。在桌面按右鍵-新增-text document可新增txt檔，注意中文說明的地方不要也貼進去<br>
+        2. 存檔，關閉txt file，把檔名最後面的txt改成bat，跳出通知按yes<br>
+        3. 打開這個bat file<br>
+        4. 看你要加密還是解密輸入1或2後按下enter<br>
+        5. 輸入明文或密文後按下enter<br>
+        6. 輸入文字即會被加密或解密並在下方顯示<br><br>
+
+        恭喜朋友，你現在有自己的key的Substitution Cipher了，可以偷偷的把你的key對應表傳給你要密密通訊的對象，程式記得也要傳不然對方要用手解<br>
+        key有4*10^26種絕對解不開的，傳壞壞的東西也行，多壞都可以!<br>
+        然而，真的是這樣嗎......?<br>
+        如果有個上過密碼學的Oscar解的開呢....?還要傳....壞壞的東西嗎....?<br>
+        (next episode : frequency analysis)
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div id="fre">
+        Frequency Analysis<br>
+        你有想過英文裡那些字母最常被用到嗎?事實上英文字母在文章中出現的頻率是有趨勢的，例如出現頻率最高的是e，再來是t和a，詳細數據去wiki查一下就有了<br>
+        這代表一個知道這件事的Oscar又可以知道你用Substitution Cipher加密的內容了，輕鬆寫個code直接一覽無遺<br><br>
+
+        Oscar的能力跟知識也是要與日俱增呢，這年頭連當壞蛋都不容易了<br><br>
+
+        簡單來說Oscar可以統計密文中的字母出現的頻率，然後對應英文頻率表，就可以先猜出最常出現的t, e, a或最少出現的j, x, z，猜到一些之後其他密文就會越來越容易，例如t_e中間沒意外會是h，這樣所有的h都會被知道，the_e中間就很容易地可以猜s或m了<br>
+        這是一個很general的攻擊方法(攻擊密碼系統)，讓你的超大4*10^26 key池直接放學，甚至不會有家長接<br><br>
+
+        batch file code:<br><br>
+
+        @echo off<br>
+        setlocal enabledelayedexpansion<br>
+        goto:main<br>
+        pause<br><br>
+
+        ==========================================<br>
+        參考Substitution Cipher code解說內容<br>
+        ==========================================<br><br>
+
+        :main<br>
+set /p "plaintext=here"<br>
+setlocal enabledelayedexpansion<br>
+set aa=0<br>
+set bb=0<br>
+set cc=0<br>
+set dd=0<br>
+set ee=0<br>
+set ff=0<br>
+set gg=0<br>
+set hh=0<br>
+set ii=0<br>
+set jj=0<br>
+set kk=0<br>
+set ll=0<br>
+set mm=0<br>
+set nn=0<br>
+set oo=0<br>
+set pp=0<br>
+set qq=0<br>
+set rr=0<br>
+set ss=0<br>
+set tt=0<br>
+set uu=0<br>
+set vv=0<br>
+set ww=0<br>
+set xx=0<br>
+set yy=0<br>
+set zz=0<br>
+set sum=0<br>
+for /L %%i in (0,1,250) do (<br>
+    set "letter=!plaintext:~%%i,1!"<br>
+    if "!letter!"=="a" (set /a aa+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="b" (set /a bb+=1 <br>
+set /a sum+=1)<br>
+if "!letter!"=="c" (set /a cc+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="d" (set /a dd+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="e" (set /a ee+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="f" (set /a ff+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="g" (set /a gg+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="h" (set /a hh+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="i" (set /a ii+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="j" (set /a jj+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="k" (set /a kk+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="l" (set /a ll+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="n" (set /a nn+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="o" (set /a oo+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="p" (set /a pp+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="q" (set /a qq+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="r" (set /a rr+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="s" (set /a ss+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="t" (set /a tt+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="u" (set /a uu+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="v" (set /a vv+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="w" (set /a ww+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="x" (set /a xx+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="y" (set /a yy+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="z" (set /a zz+=1<br>
+set /a sum+=1)<br>
+if "!letter!"=="m" (set /a mm+=1<br>
+set /a sum+=1)<br>
+)<br>
+     set /a aa=aa*100/sum   <br>
+set /a bb=bb*100/sum<br>
+set /a cc=cc*100/sum<br>
+set /a dd=dd*100/sum<br>
+set /a ee=ee*100/sum<br>
+set /a ff=ff*100/sum<br>
+set /a gg=gg*100/sum<br>
+set /a hh=hh*100/sum<br>
+set /a ii=ii*100/sum<br>
+set /a jj=jj*100/sum<br>
+set /a kk=kk*100/sum<br>
+set /a ll=ll*100/sum<br>
+set /a mm=mm*100/sum<br>
+set /a nn=nn*100/sum<br>
+set /a oo=oo*100/sum<br>
+set /a pp=pp*100/sum<br>
+set /a qq=qq*100/sum<br>
+set /a rr=rr*100/sum<br>
+set /a ss=ss*100/sum<br>
+set /a tt=tt*100/sum<br>
+set /a uu=uu*100/sum<br>
+set /a vv=vv*100/sum<br>
+set /a ww=ww*100/sum<br>
+set /a xx=xx*100/sum<br>
+set /a yy=yy*100/sum<br>
+set /a zz=zz*100/sum<br>
+echo blablabla<br>
+echo sum:%sum%, a:%aa%%%, b:%bb%%%, c:%cc%%%, d:%dd%%%, e:%ee%%%, f:%ff%%%, g:%gg%%%, h:%hh%%%, i:%ii%%%, j:%jj%%%, k:%kk%%%, l:%ll%%%, m:%mm%%%, n:%nn%%%, o:%oo%%%, p:%pp%%%, q:%qq%%%, r:%rr%%%, s:%ss%%%, t:%tt%%%, u:%uu%%%, v:%vv%%%, w:%ww%%%, x:%xx%%%, y:%yy%%%, z:%zz%%%<br>
+goto main<br>
+EXIT /B 0<br><br>
+
+        =======================================================<br>
+        前三行請參考Substitution Cipher code解釋內容<br>
+        set aa=0設定存放每個字母出現次數的變數及初始值，全部不分行打好像會有bug<br>
+        再來一個for loop紀錄出現次數，sum是用來算總字數後面計算比例用的，詳細可參考Substitution Cipher的code<br>
+        出for loop後計算出現頻率，這邊aa/sum*100和aa*100/sum結果會不同，因為batch裡沒有浮點數只有整數，所以最好在計算過程中都不要讓0.12655之類的數字產生<br>
+        echo blablabla會印出blablabla讓我比較好debug，可以刪掉<br>
+        最後echo出每個字母出現的頻率，%aa%會取aa的值，而後面的%%會印出一個%，因為%在batch與法理有特殊用途，要打%%才會印出一個%，所以會是%bb%%%<br>
+        後面導向main function並結束function<br><br><br>
+
+
+        使用方法<br>
+        1. 複製code到txt file<br>
+        2. 存檔後改副檔名txt(檔名後面點點之後的字)為bat，通知出現按yes<br>
+        3. 打開檔案，直接輸入文章或字串，按下enter即會輸出頻率<br><br><br>
+
+
+        Oscar再次解開了Bob和Alice的秘密通訊，及時趕到拯救了要被Bob和Alice加入泡麵的布丁<br>
+        "泡麵就是泡麵，布丁就是布丁"<br>
+        Oscar如是說<br>
+        然後接下來幾個月，Bob和Alice又想了其他方法避免Oscar攻擊他們的密碼系統，例如依照規則變化key應用在不同段明文、週期變化key的密碼等等，但Oscar都會想到破解辦法，Bob和Alice認為在這個類型的密碼系統玩躲貓貓不是辦法，他們分析了Substitution Cipher會被破解的原因，並想到了一個成本昂貴但在數學理論上幾乎無法破解的密碼系統...<br>
+        (next episode : One-time Pad)
+
+    </div>
+
+
+</body>
+</html>
