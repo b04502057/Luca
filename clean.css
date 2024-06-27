@@ -1,0 +1,368 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    padding-top: 50px;
+}
+
+
+.title{
+    position: relative;
+    left: 40px;
+    top: 10px;
+    font-size: 50px;
+    font-family: SF Pro TC, SF Pro Text, SF Pro Icons, PingFang TC, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.subtitle{
+    position:absolute;
+    right: 50px;
+    top: 35px;
+    font-size: 20px;
+}
+
+
+.content{
+    position: absolute;
+    top: 45%;
+    right: 10%;
+    left: 30%;
+    bottom: 15%;
+    text-align: center;
+    font-size: 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.img{
+    position: absolute;
+    width: 23%;
+    height: auto;
+    bottom: 0;
+}
+
+.img2{
+    position: absolute;
+    right: 2px;
+    width: 14%;
+    height: auto;
+    bottom: 0;
+}
+
+.img3{
+    position: absolute;
+    width: 10%;
+    height: auto;
+    bottom: 0%;
+    left: 2px;
+}
+
+
+.imgright{
+    position: absolute;
+    width: 50%;
+    height: auto;
+    bottom: 15%;
+    right: 5%;
+}
+
+.imgleft{
+    position: absolute;
+    width: 45%;
+    height: auto;
+    bottom: 20%;
+    left: 5%;
+}
+
+.pic{
+    bottom: 0;
+}
+
+.pic2{
+    position: absolute;
+    right: 30%;
+}
+
+.pic3{
+    bottom: 0;
+    height: 200px;
+}
+
+.intertext{
+    color: black;
+}
+
+
+.intertext1{
+    color: white;
+}
+
+#st{
+    position: relative;
+    /*background-color: aquamarine;*/
+    height: 55ch;
+    width: 100%;
+    font-family: SF Pro TC, SF Pro Text, SF Pro Icons, PingFang TC, Helvetica Neue, Helvetica, Arial, sans-serif;
+    z-index: 1;
+}
+
+#firstinter{
+    position: relative;
+    height: 280px;
+    width: 100%;
+    font-family: SF Pro TC, SF Pro Text, SF Pro Icons, PingFang TC, Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-align: center;
+    background-image: url("./img/8.jpg");
+    background-size: cover; /* Cover the entire div with the background image */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the background image */
+    font-size: 60px;
+}
+
+
+#nd{
+    position: relative;
+    height: 50ch;
+    width: 100%;
+    background-color: #f7ab06;
+}
+
+#me{
+    position: absolute;
+    top: 43%;
+    left: 10%;
+    font-style: italic; /* Example of setting font style to italic */
+    font-weight: 700; /* Example of setting font weight to bold (700) */
+    font-size: 30px;
+}
+
+#rightsup{
+    position: absolute;
+    top: 40%;
+    right: 10%;
+    left: 45%;
+    background-color: #f7ab06;
+    font-style: italic; /* Example of setting font style to italic */
+    font-weight: 700; /* Example of setting font weight to bold (700) */
+    font-size: 18px;
+}
+
+#leftsup{
+    position: absolute;
+    top: 40%;
+    right: 45%;
+    left: 10%;
+    /*background-color: #f7ab06;*/
+    font-style: italic; /* Example of setting font style to italic */
+    font-weight: 700; /* Example of setting font weight to bold (700) */
+    font-size: 13px;
+    background-color: #f7ab06;
+}
+
+#bme{
+    position: absolute;
+    top: 43%;
+    right: 10%;
+    font-style: italic; /* Example of setting font style to italic */
+    font-weight: 700; /* Example of setting font weight to bold (700) */
+    font-size: 30px;
+}
+
+#cont{
+    position: absolute;
+    top: 10%;
+    right: 30%;
+    font-style: italic; /* Example of setting font style to italic */
+    font-weight: 700; /* Example of setting font weight to bold (700) */
+    font-size: 30px;
+    height: 110px;
+}
+
+
+#rd{
+    position: relative;
+    /*background-color: rgb(15, 252, 86);*/
+    height: 50ch;
+    width: 100%;
+}
+
+#forth{
+    position: relative;
+    /*background-color: rgb(15, 252, 86);*/
+    height: 50ch;
+    width: 100%;
+}
+
+
+
+#fifth{
+    position: relative;
+    /*background-color: rgb(15, 252, 86);*/
+    height: 50ch;
+    width: 100%;
+}
+
+#con{
+    position: relative;
+    /*background-color: rgb(15, 252, 86);*/
+    height: 200px;
+    width: 100%;
+    background-color: #f7ab06;
+}
+
+#vid{
+    position: relative;
+    left: 25%;
+}
+
+
+
+
+
+
+
+
+/*animation*/
+
+.content-section {
+    height: 100vh; /* Adjust height as needed */
+    /*background-color: #ffffff; /* Example background color */
+    overflow: hidden; /* Hide overflow content until revealed */
+    opacity: 1; /* Initially hide content */
+}
+
+.content1 {
+    opacity: 0; /* Initially hide content */
+    transition: opacity 3s ease; /* Transition for smooth opacity change */
+}
+.show-content {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*navbar*/
+.navbar {
+    background-color: #f7ab06; /* Navbar background color */
+    overflow: visible; /* Clear floats */
+    width: 100%; /* Full width */
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Ensure navbar stays above other content */
+    text-align: center; /* Center align all items */
+    font-style: italic; /* Example of setting font style to italic */ 
+}
+
+.navbar a {
+    display: inline-block; /* Display links as inline-block elements */
+    color: white; /* Link text color */
+    padding: 14px 30px; /* Padding around text */
+    text-decoration: none; /* Remove default underline */
+    float: none; /* Remove float from other links */
+    display: inline-block; /* Ensure inline-block for centered alignment */
+    margin-left: 10px; /* Optional margin between links */
+}
+
+
+.navbar a:hover {
+    background-color: #dee9fc; /* Background color on hover */
+    color: black; /* Text color on hover */
+}
+
+.container {
+    max-width: 960px; /* Set maximum width of container */
+    margin: 0 auto; /* Center align container */
+    padding: 0 20px; /* Optional padding for content inside container */
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*testing*/
+.dropdown {
+    float: left;
+    overflow: hidden;
+  }
+  
+  .dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #dee9fc;
+    color: black;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #dee9fc;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #dee9fc;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropbtn:hover{
+    color: black;
+    position: inherit;
+  }
+
+
+
+

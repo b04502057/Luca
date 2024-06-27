@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="julia.css">
+    <script src="julia.js"></script>
+    <title>Julia</title>
+</head>
+<body>
+    <img src="./img/JULIA.png" alt="" style="width: 100%; height: auto;">
+    <div id="main">
+        <div style="width: 100%; ">
+            The programs are about acoustics. <br><br><br>
+        </div>
+        <div class="subitem" id="b1">
+            Generate audio signal
+        </div>
+
+        <div class="subitem" id="b2">
+            FFT(Fast Fourier Transform)
+        </div>
+
+        <div class="subitem" id="b3">
+            Acoustic knowledge(Engineering)
+        </div>
+
+        <div class="subitem" id="b4">
+            Acoustic knowledge(Theoretical)
+        </div>
+
+
+
+
+        
+    </div>
+        <br>
+    <div id="d1">
+          <img src="./img/generate audio.png" alt="" class="showpic">
+          <div class="exp">
+            1. Import the package WAV<br><br>
+            2. Set sampling rate, time step, frequency, and the waveform of the signal<br><br>
+            3. wavwrite function can generate wav file, user should provide waveform(y), filename, and sampling rate <br><br>
+            4. wavread function can read the waveform and the sampling rate out <br><br>
+            5. wavappend function append signal to the original wav file <br><br>
+            * You can find the installation method on Julia website, just follow the procedure
+          </div>
+    </div>
+
+    <div id="d2">
+        <img src="./img/fft.png" alt="" class="showpic">
+        <div class="exp">
+            1. Several package should be imported to this program <br><br>
+            2. The usage of function "fftshift" shift the result to the correct position because the output of the fft function is stored in an array but the front half data is for negative frequencies <br><br>
+            3. fftfreq function calculate the correct frequency array for later plotting
+
+        </div>
+    </div>
+
+    <div id="d3">
+        <div class="exp2">
+            1. Clipping: A form of distortion that limits a signal once it exceeds a threshold <br><br>
+            2. Equal-loudness contour: A measure of sound pressure level over the frequency spectrum, for which a listener perceives a constant loudness when presented with pur steady tones. By this graph, we can know that human ears are sensitive to what frequency range <br><br>
+            3. Phon and Sone: Both are loudness unit. Former is logarithmic unit and later is linear unit. <br><br>
+            4. THD+N: Total harmonic distortion plus noise, a common metric used in speaker evaluation and audio engineering to quantify the amount of distortion and noise present in the output of a speaker or audio system <br><br>
+            5. dBFS: dB full scale, the amplitude of a signal compared with the maximum which a device can handle before clipping occurs <br><br>
+            6. Dynamic range: The ratio between the strongest un-distorted signal on a channel and the minimum discernible signal <br><br>
+            7. SNR: Signal-to-noise ratio, a measure used to compared the level of a desire signal to the level of background noise <br><br>
+            8. SPL, SWL: Sound pressure level and sound power level <br><br>
+            10. AGC: Auto gain control <br><br>
+            11. 3QUEST: 3-fold quality evaluation of speech in telecommunication. Used to evaluate the quality of noise depression algorithm working in various noisy environment. 
+        </div>
+    </div>
+
+    <div id="d4">
+        <div class="exp2">
+            Under construction
+        </div>
+    </div>
+
+
+</body>
+</html>
