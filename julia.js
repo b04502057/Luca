@@ -8,26 +8,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const div7 = document.getElementById('d3');
     const div8 = document.getElementById('d4');
 
-    function handleMouseEnter(targetDiv) {
+    // Initialize opacity to 1 for all target divs
+    div5.style.opacity = '0';
+    div6.style.opacity = '0';
+    div7.style.opacity = '0';
+    div8.style.opacity = '0';
+
+    function handleClick(targetDiv) {
         return () => {
-            targetDiv.style.opacity = '10.5'; // Change the opacity to 0.5
+            // Toggle opacity between 0 and 1
+            if (targetDiv.style.opacity === '0') {
+                targetDiv.style.opacity = '1'; // Change opacity to 1 on click if currently 0
+            } else {
+                targetDiv.style.opacity = '0'; // Change opacity to 0 on click if currently 1
+            }
         };
     }
 
-    function handleMouseLeave(targetDiv) {
-        return () => {
-            targetDiv.style.opacity = '0'; // Reset the opacity to 1
-        };
-    }
-
-    div1.addEventListener('mouseenter', handleMouseEnter(div5));
-    div1.addEventListener('mouseleave', handleMouseLeave(div5));
-    div2.addEventListener('mouseenter', handleMouseEnter(div6));
-    div2.addEventListener('mouseleave', handleMouseLeave(div6));
-    div3.addEventListener('mouseenter', handleMouseEnter(div7));
-    div3.addEventListener('mouseleave', handleMouseLeave(div7));
-    div4.addEventListener('mouseenter', handleMouseEnter(div8));
-    div4.addEventListener('mouseleave', handleMouseLeave(div8));
-
-
+    // Add click event listeners to toggle opacity
+    div1.addEventListener('click', handleClick(div5));
+    div2.addEventListener('click', handleClick(div6));
+    div3.addEventListener('click', handleClick(div7));
+    div4.addEventListener('click', handleClick(div8));
 });
