@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Pay</title>
+    <style>
+        body {
+            background-color: blanchedalmond;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        img {
+            position: absolute;
+            left: 43%;
+            top: 33%;
+            width: 150px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .form-container {
+            position: absolute;
+            left: 38%;
+            top: 30%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .transacting {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="./img/HONDONI.png" alt="" style="opacity: 0;">
+    <div class="form-container">
+        Operator: <input type="text"><br>
+        Receiver: <input type="text"><br>
+        Delivered object: <input type="text"><br>
+        Note: <input type="text"><br>
+        <button onclick="startTransaction()">Love Transaction</button>
+    </div>
+    <div id="transacting" class="transacting">
+        Transacting...
+    </div>
+
+    <script>
+        // Function to fade out the logo image after 3 seconds
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                document.getElementById('logo').style.opacity = 1;
+            }, 500); // Adjust this delay as needed
+            
+            // Delayed fade out of the logo image after 3 seconds
+            setTimeout(() => {
+                document.getElementById('logo').style.opacity = 0;
+                // Show form container after logo fades out
+                document.querySelector('.form-container').style.opacity = 1;
+            }, 3000);
+        });
+
+
+
+
+        function startTransaction() {
+
+            // Show transacting div for 5 seconds then disappear
+            document.getElementById('transacting').style.opacity = 1;
+            setTimeout(() => {
+                document.getElementById('transacting').style.opacity = 0;
+            }, 5000);
+
+            // Alert "Transaction successful" after 5 seconds
+            setTimeout(() => {
+                alert("Transaction successful");
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
